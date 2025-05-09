@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}My Profile - {{ block.super }}{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-user-circle mr-2"></i> My Profile Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label"><i class="fas fa-user mr-2"></i> Username:</label>
+                        <input type="text" class="form-control-plaintext" id="username" value="{{ user.username }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><i class="fas fa-envelope mr-2"></i> Email Address:</label>
+                        <input type="email" class="form-control-plaintext" id="email" value="{{ user.email }}" readonly>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

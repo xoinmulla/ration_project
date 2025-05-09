@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h2 class="mb-0">
+                        {% if 'Record' in title %}
+                            <i class="fas fa-clipboard-check mr-2"></i>
+                        {% elif 'Add' in title %}
+                            <i class="fas fa-plus-square mr-2"></i>
+                        {% else %}
+                            <i class="fas fa-file-alt mr-2"></i>
+                        {% endif %}
+                        {{ title }}
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h4 class="mb-4 text-primary"><i class="fas fa-info-circle mr-2"></i> Distribution Details</h4>
+                        {{ form|crispy }}
+                        <hr class="my-4">
+                        <h4 class="mb-3 text-info"><i class="fas fa-boxes mr-2"></i> Items Distributed</h4>
+                        {{ formset.management_form }}
+                        <div id="formset-container">
+                            {% for form in formset %}
+                                <div class="card mb-3 shadow-sm border-info">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-2 text-muted">Item #{{ forloop.counter }}</h6>
+                                        {{ form|crispy }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">
+                                <i class="fas fa-check-circle mr-2"></i> Submit Distribution
+                            </button>
+                            <a href="{% url 'distribution_management:distribution_record_list' %}" class="btn btn-outline-secondary btn-lg btn-block">
+                                <i class="fas fa-ban mr-2"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

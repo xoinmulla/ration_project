@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">
+                        {% if 'Add' in title or 'Create' in title %}
+                            <i class="fas fa-plus-circle mr-2"></i>
+                            Add {{ title|slice:"4:" }}
+                        {% elif 'Edit' in title or 'Update' in title %}
+                            <i class="fas fa-edit mr-2"></i>
+                            Edit {{ title|slice:"5:" }}
+                        {% else %}
+                            <i class="fas fa-file-alt mr-2"></i>
+                            {{ title }}
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="submit" class="btn btn-success btn-block btn-lg">
+                                <i class="fas fa-save mr-2"></i> Save {{ title|lower }}
+                            </button>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-block">
+                                <i class="fas fa-ban mr-2"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
